@@ -6,6 +6,8 @@
 /build
 */build
 /captures
+iosApp/*.xcworkspace/xcuserdata
+iosApp/*.xcodeproj/xcuserdata
 .externalNativeBuild
 .cxx
 local.properties

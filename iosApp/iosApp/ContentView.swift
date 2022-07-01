@@ -1,11 +1,35 @@
 import SwiftUI
 import shared
 
+class ApodViewModel: ObservableObject {
+  @Published var picture: AstronomyPicture?
+  private var networkService: NetworkService
+
+  init() {
+    networkService = NetworkService()
+  }
+  
+  func getAPOD() {
+    DispatchQueue.main.async {
+      self.networkService.fetchTodayAPOD { picture in
+        self.picture = picture
+      }
+    }
+  }
+}
 struct ContentView: View {
-	let greet = Greeting().greeting()
+  @ObservedObject
+  var viewModel = ApodViewModel()
 
 	var body: some View {
-		Text(greet)
+    VStack {
+      Text(viewModel.picture?.explanation ?? "")
+    }
+    .onAppear {
+      DispatchQueue.main.async {
+        viewModel.getAPOD()
+      }
+    }
 	}
 }
 

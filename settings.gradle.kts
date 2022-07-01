@@ -5,7 +5,8 @@ pluginManagement {
         mavenCentral()
     }
 }
-
 rootProject.name = "Apod"
+
+
 include(":androidApp")
 include(":shared")

@@ -1,0 +1,10 @@
+import com.imtiazabbas.apod.db.data.DateTime;
+
+CREATE TABLE astronomyPicture (
+  date INTEGER AS DateTime,
+  hdUrl TEXT NOT NULL,
+  title TEXT NOT NULL,
+  media_type TEXT
+);
+
+CREATE INDEX astronomy_picture_date ON astronomyPicture(date);

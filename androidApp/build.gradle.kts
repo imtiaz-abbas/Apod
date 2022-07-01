@@ -4,6 +4,8 @@ plugins {
     id("kotlin-android")
 }
 
+val composeVersion: String by project
+
 android {
     compileSdk = 32
     defaultConfig {
@@ -56,8 +58,10 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0")
     implementation(project(":shared"))
-    val composeVersion = "1.2.0-alpha01"
-    implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
+
+    // compose
+    implementation("androidx.compose.ui:ui-tooling-preview:1.1.1")
+    implementation("androidx.compose.ui:ui-tooling:1.1.1")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
     implementation("androidx.compose.ui:ui:$composeVersion")
     implementation("androidx.compose.material:material:$composeVersion")
