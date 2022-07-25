@@ -3,6 +3,7 @@
     package="com.imtiazabbas.apod.android">
 
     <application
+        android:name=".MainApplication"
         android:allowBackup="false"
         android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network_security_config"

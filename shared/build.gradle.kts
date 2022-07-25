@@ -98,7 +98,7 @@ android {
 
 sqldelight {
     database("ApodDatabase") {
-        packageName = "com.imtiazabbas.apod.db.data"
+        packageName = "com.imtiazabbas.apod.data.db"
         schemaOutputDirectory = file("build/dbs")
     }
     linkSqlite = false

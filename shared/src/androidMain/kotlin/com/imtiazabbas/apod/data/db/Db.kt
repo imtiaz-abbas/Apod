@@ -1,4 +1,4 @@
-package com.imtiazabbas.apod.db.data
+package com.imtiazabbas.apod.data.db
 
 import android.content.Context
 import com.squareup.sqldelight.android.AndroidSqliteDriver

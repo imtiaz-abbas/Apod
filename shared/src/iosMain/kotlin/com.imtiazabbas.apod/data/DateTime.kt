@@ -1,4 +1,4 @@
-package com.imtiazabbas.apod.db.data
+package com.imtiazabbas.apod.data
 
 import com.squareup.sqldelight.ColumnAdapter
 import platform.Foundation.NSDate
@@ -11,7 +11,8 @@ import platform.Foundation.timeIntervalSince1970
 import kotlin.math.roundToLong
 
 actual class DateTime constructor(val nsDate: NSDate) {
-  actual constructor(isoString: String) : this(partsToDate(isoString))
+  actual constructor(string: String, isIso: Boolean) : this(partsToDate(string, isIso))
+  actual constructor(millis: Long) : this(partsToDate(millis))
 
   override fun equals(other: Any?): Boolean {
     return if (other is DateTime) {
@@ -24,12 +25,24 @@ actual class DateTime constructor(val nsDate: NSDate) {
   actual fun getTimeInMillis(): Long {
     return (this.nsDate.timeIntervalSince1970 * 1000).roundToLong()
   }
+
+  actual fun getReadableTime(): String {
+    return formatToReadableDatetime(this)
+  }
 }
 
-internal fun partsToDate(isoString: String): NSDate {
-  val formatter = NSISO8601DateFormatter()
-  formatter.formatOptions = NSISO8601DateFormatWithFractionalSeconds or NSISO8601DateFormatWithInternetDateTime
-  return formatter.dateFromString(isoString)!!
+internal fun partsToDate(string: String, isIso: Boolean): NSDate {
+  return if (isIso) {
+    val formatter = NSISO8601DateFormatter()
+    formatter.formatOptions = NSISO8601DateFormatWithFractionalSeconds or NSISO8601DateFormatWithInternetDateTime
+    formatter.dateFromString(string)!!
+  } else {
+    readableDateStringToNSDate(string)!!
+  }
+}
+
+internal fun partsToDate(millis: Long): NSDate {
+  return NSDate.dateWithTimeIntervalSince1970((millis / 1000).toDouble())
 }
 
 actual class DateTimeAdapter actual constructor() : ColumnAdapter<DateTime, Long> {

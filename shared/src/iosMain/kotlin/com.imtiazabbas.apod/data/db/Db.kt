@@ -1,4 +1,4 @@
-package com.imtiazabbas.apod.db.data
+package com.imtiazabbas.apod.data.db
 
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
@@ -24,7 +24,7 @@ object Db {
   // Called from Swift
   @Suppress("unused")
   fun defaultDriver() {
-    Db.dbSetup(NativeSqliteDriver(Schema, "apod.db"))
+    dbSetup(NativeSqliteDriver(Schema, "apod.db"))
   }
 
   val instance: ApodDatabase

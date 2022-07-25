@@ -1,12 +1,15 @@
 package com.imtiazabbas.apod.Network
 
 import com.imtiazabbas.apod.BuildKonfig
+import com.imtiazabbas.apod.data.DateTime
+import com.imtiazabbas.apod.data.dateTimeNow
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.serialization.builtins.ListSerializer
 
 import kotlinx.serialization.json.Json
 import kotlin.native.concurrent.SharedImmutable
@@ -20,12 +23,23 @@ class NetworkService {
 
   private val json = Json { ignoreUnknownKeys = true }
 
-  fun fetchTodayAPOD(callback: (AstronomyPicture?) -> Unit) {
-    GlobalScope.launch(ApplicationDispatcher) {
-      val response = client.get("${baseUrl}?api_key=${apiKey}")
-      val responseText = response.bodyAsText()
-      val picture = json.decodeFromString(AstronomyPicture.serializer(), responseText)
-      callback(picture)
+  fun fetchPictures(callback: (List<AstronomyPicture>) -> Unit) {
+    GlobalScope.launch {
+      val nowMillis = dateTimeNow().getTimeInMillis()
+      val startMillis = nowMillis - 604800000L
+      val startDate = DateTime(millis = startMillis)
+//      val endMillis = nowMillis - 86400000L
+//      val endDate = DateTime(millis = endMillis)
+      val url = "${baseUrl}?api_key=${apiKey}&start_date=${startDate.getReadableTime()}"
+      try {
+        val response = client.get(url)
+        val responseText = response.bodyAsText()
+        val pictures = json.decodeFromString(ListSerializer(AstronomyPicture.serializer()), responseText)
+        callback(pictures)
+      } catch (err: Exception) {
+        println("Got Error -> ${err.message}")
+        callback(listOf())
+      }
     }
   }
 

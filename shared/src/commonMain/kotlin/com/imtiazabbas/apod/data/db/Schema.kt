@@ -1,5 +1,6 @@
-package com.imtiazabbas.apod.db.data
+package com.imtiazabbas.apod.data.db
 
+import com.imtiazabbas.apod.data.DateTimeAdapter
 import com.squareup.sqldelight.db.SqlDriver
 import comimtiazabbasapoddatadb.AstronomyPicture
 

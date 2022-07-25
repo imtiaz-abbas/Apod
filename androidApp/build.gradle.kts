@@ -59,6 +59,9 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.0")
     implementation(project(":shared"))
 
+    implementation("androidx.navigation:navigation-compose:2.5.0")
+
+    implementation("io.coil-kt:coil-compose:1.3.1")
     // compose
     implementation("androidx.compose.ui:ui-tooling-preview:1.1.1")
     implementation("androidx.compose.ui:ui-tooling:1.1.1")

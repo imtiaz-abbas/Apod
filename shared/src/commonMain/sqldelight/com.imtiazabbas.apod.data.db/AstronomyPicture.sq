@@ -1,10 +1,21 @@
-import com.imtiazabbas.apod.db.data.DateTime;
+import com.imtiazabbas.apod.data.DateTime;
 
 CREATE TABLE astronomyPicture (
-  date INTEGER AS DateTime,
-  hdUrl TEXT NOT NULL,
+  date INTEGER AS DateTime PRIMARY KEY,
+  url TEXT NOT NULL,
   title TEXT NOT NULL,
+  explanation TEXT NOT NULL,
   media_type TEXT
 );
 
 CREATE INDEX astronomy_picture_date ON astronomyPicture(date);
+
+insertOrReplacePicture:
+INSERT OR REPLACE INTO astronomyPicture(date, url, title, explanation, media_type)
+VALUES (?,?,?,?, ?);
+
+listPictures:
+SELECT * FROM astronomyPicture ORDER BY date DESC;
+
+mostRecentPicture:
+SELECT * FROM astronomyPicture ORDER BY date DESC LIMIT 1;
